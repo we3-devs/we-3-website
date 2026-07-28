@@ -3,26 +3,122 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 
+const siteUrl = "https://we3-techinnovation.vercel.app";
+
 export const metadata: Metadata = {
-	title: "WE-3 Tech & Innovation | Engineering Intelligent Software",
-	description:
-		"Nepal's premier engineering team building AI-powered platforms, enterprise systems, and digital products for the modern world.",
-	keywords: [
-		"software development",
-		"AI development",
-		"Nepal tech company",
-		"web development",
-		"mobile development",
-		"enterprise software",
-		"SaaS development",
-		"digital transformation",
-	],
-	openGraph: {
-		title: "WE-3 Tech & Innovation",
-		description: "Engineering intelligent software for the modern world. AI, software, innovation.",
-		type: "website",
-		locale: "en_US",
-	},
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: "WE-3 Tech & Innovation | AI, Software Development & Digital Solutions",
+    template: "%s | WE-3 Tech & Innovation",
+  },
+
+  description:
+    "WE-3 Tech & Innovation is a technology company delivering AI solutions, custom software development, web and mobile applications, cloud solutions, automation, IT consulting, and digital transformation services for businesses worldwide.",
+
+  applicationName: "WE-3 Tech & Innovation",
+
+  keywords: [
+    "WE-3",
+    "WE-3 Tech",
+    "WE-3 Tech & Innovation",
+    "Software Development",
+    "Web Development",
+    "Mobile App Development",
+    "AI Development",
+    "Artificial Intelligence",
+    "Generative AI",
+    "AI Automation",
+    "Machine Learning",
+    "Cloud Solutions",
+    "Cloud Computing",
+    "DevOps",
+    "Enterprise Software",
+    "SaaS Development",
+    "Digital Transformation",
+    "IT Consulting",
+    "Business Automation",
+    "Custom Software",
+    "Technology Company",
+    "Tech Company Nepal",
+    "Software Company Nepal",
+    "Global Software Company",
+    "UI UX Design",
+    "API Development",
+    "Next.js Development",
+    "React Development",
+    "Node.js Development",
+    "PostgreSQL",
+    "Cloud Infrastructure",
+    "Innovation",
+  ],
+
+  authors: [
+    {
+      name: "WE-3 Tech & Innovation",
+    },
+  ],
+
+  creator: "WE-3 Tech & Innovation",
+  publisher: "WE-3 Tech & Innovation",
+
+  category: "Technology",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "WE-3 Tech & Innovation",
+
+    title: "WE-3 Tech & Innovation",
+
+    description:
+      "Building intelligent software solutions through AI, cloud technologies, and modern software engineering.",
+
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "WE-3 Tech & Innovation",
+      },
+    ],
+  },
+
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "WE-3 Tech & Innovation",
+  //   description:
+  //     "AI • Software Development • Cloud • Digital Transformation",
+
+  //   images: ["/og-image.jpg"],
+  //   creator: "@yourhandle",
+  // },
+
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
