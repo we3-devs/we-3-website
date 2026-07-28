@@ -8,14 +8,39 @@ import { cn } from "@/lib/utils";
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setLoading(false);
-    setSubmitted(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      subject: formData.get("subject"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error ?? "Failed to send message.");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to send message.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -158,6 +183,7 @@ export function Contact() {
                   <input
                     type="text"
                     id="name"
+                    name="name"
                     required
                     placeholder="Your name"
                     className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] transition-all duration-300"
@@ -173,6 +199,7 @@ export function Contact() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     required
                     placeholder="your@email.com"
                     className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] transition-all duration-300"
@@ -190,6 +217,7 @@ export function Contact() {
                 <input
                   type="text"
                   id="subject"
+                  name="subject"
                   required
                   placeholder="What are you looking to build?"
                   className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] transition-all duration-300"
@@ -205,12 +233,17 @@ export function Contact() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   rows={4}
                   required
                   placeholder="Tell us about your project..."
                   className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-foreground placeholder:text-muted/40 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] transition-all duration-300 resize-none"
                 />
               </div>
+
+              {error && (
+                <p className="text-sm text-red-400">{error}</p>
+              )}
 
               <button
                 type="submit"
